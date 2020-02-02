@@ -9,6 +9,9 @@ __pycache__/
 # PyCharm extensions
 .idea/
 
+# Settings file
+local.py
+
 # Distribution / packaging
 .Python
 build/
