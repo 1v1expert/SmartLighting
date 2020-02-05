@@ -1,12 +1,15 @@
 from django.core.management.base import BaseCommand
 from ModbusTCP.core.client import ModbusClient
 from ModbusTCP.promodem.app import start
+from ModbusTCP.promodem.client import PromodemClient
 
 class Command(BaseCommand):
     help = 'Generates Fake data'
     
     def handle(self, *args, **options):
-        start()
+        client = PromodemClient(host="192.168.1.41")
+        client.set_brightness(0)
+        # start()
         # https://github.com/sourceperl/pyModbusTCP/tree/master/examples
         # c = ModbusClient(host="192.168.1.41", port=502, auto_open=True, auto_close=True, timeout=2, debug=True)
         # c.open()
