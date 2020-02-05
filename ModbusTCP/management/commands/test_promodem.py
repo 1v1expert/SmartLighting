@@ -8,10 +8,15 @@ class Command(BaseCommand):
     
     def handle(self, *args, **options):
         client = PromodemClient(host="192.168.1.41")
-        client.set_brightness(0)
+        client.set_brightness(100)
         signal = client.get_wifi_signal()
         project_code = client.get_project_code()
-        print(signal[0], project_code[0])
+        voltage_inversion = client.get_voltage_inversion()
+        
+        print(signal[0], project_code[0], bool(voltage_inversion[0]))
+        client.set_voltage_inversion(0)
+        voltage_inversion = client.get_voltage_inversion()
+        print(bool(voltage_inversion[0]))
         # print(type())
         # start()
         # https://github.com/sourceperl/pyModbusTCP/tree/master/examples

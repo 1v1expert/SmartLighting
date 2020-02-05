@@ -13,11 +13,15 @@ class PromodemClient(object):
         self.promodem = ModbusClient(host=host, port=port, unit_id=unit_id, timeout=timeout,
                                      debug=debug, auto_open=auto_open, auto_close=auto_close)
     
-    def set_brightness(self, value):
+    def set_brightness(self, value: int) -> bool:
         """ Установить яркость светильника
             Modbus function WRITE_SINGLE_REGISTER (0x06) | DEC=0, | reg_value
         """
         return self._write_command(self.promodem.write_single_register, 0, value)
+    
+    def set_voltage_inversion(self, value):
+        """ Установить инверсию напряжения """
+        return self._write_command(self.promodem.write_single_register, 1, int(bool(value)))
     
     def get_wifi_signal(self):
         """ Получить уровень принимаемого сигнала WiFi  """
@@ -27,6 +31,13 @@ class PromodemClient(object):
     def get_project_code(self):
         """ ID: Код проекта  """
         return self.promodem.read_holding_registers(15)
+    
+    def get_modification_code(self):
+        """ ID: Код модификации  """
+        return self.promodem.read_holding_registers(16)
+    
+    def get_voltage_inversion(self):
+        return self.promodem.read_holding_registers(1)
     
     def _write_command(self, func, *value):
         # open or reconnect TCP to server
