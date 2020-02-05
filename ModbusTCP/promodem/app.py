@@ -2,7 +2,7 @@ from ModbusTCP.core.client import ModbusClient
 
 
 def start():
-    c = ModbusClient(host="192.168.1.42", port=502, auto_open=True, auto_close=True, timeout=1, debug=True)
+    c = ModbusClient(host="192.168.1.41", port=502, auto_open=True, auto_close=True, timeout=1, debug=True)
     c.open()
     
     c.write_single_register(0, 0)
