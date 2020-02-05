@@ -7,10 +7,7 @@ def start():
     c.write_single_register(0, 0)
     c.close()
 # c.write_single_register(0, 1)
-# c.write_single_register(0, 0)
-# c.write_single_register(0, 1)
-# c.write_single_register(0, 0)
-# c.write_single_register(0, 1)
+
 
 
 
