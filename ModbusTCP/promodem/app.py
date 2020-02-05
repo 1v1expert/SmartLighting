@@ -1,5 +1,6 @@
 from ModbusTCP.core.client import ModbusClient
 
+
 def start():
     c = ModbusClient(host="192.168.1.42", port=502, auto_open=True, auto_close=True, timeout=1, debug=True)
     c.open()
@@ -7,9 +8,6 @@ def start():
     c.write_single_register(0, 0)
     c.close()
 # c.write_single_register(0, 1)
-
-
-
 
 # regs = c.read_holding_registers(0)
 # if regs:
