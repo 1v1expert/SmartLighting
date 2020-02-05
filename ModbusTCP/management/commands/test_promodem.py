@@ -9,6 +9,10 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         client = PromodemClient(host="192.168.1.41")
         client.set_brightness(0)
+        signal = client.get_wifi_signal()
+        project_code = client.get_project_code()
+        print(signal[0], project_code[0])
+        # print(type())
         # start()
         # https://github.com/sourceperl/pyModbusTCP/tree/master/examples
         # c = ModbusClient(host="192.168.1.41", port=502, auto_open=True, auto_close=True, timeout=2, debug=True)

@@ -1,8 +1,10 @@
 from ModbusTCP.core.client import ModbusClient
 
+
 class PromodemClient(object):
     
     """ Promodem TCP Client"""
+    
     ATTEMPTS = 3
     
     def __init__(self, host='localhost', port=502, unit_id=None, timeout=1.0,
@@ -12,13 +14,21 @@ class PromodemClient(object):
                                      debug=debug, auto_open=auto_open, auto_close=auto_close)
     
     def set_brightness(self, value):
-        """ Modbus function WRITE_SINGLE_REGISTER (0x06) | DEC=0, | reg_value """
-        # self.promodem.write_single_register(0, value)
-        return self.send_command(self.promodem.write_single_register, 0, value)
+        """ Установить яркость светильника
+            Modbus function WRITE_SINGLE_REGISTER (0x06) | DEC=0, | reg_value
+        """
+        return self._write_command(self.promodem.write_single_register, 0, value)
     
+    def get_wifi_signal(self):
+        """ Получить уровень принимаемого сигнала WiFi  """
+        # return self.promodem.read_coils(14)
+        return self.promodem.read_holding_registers(14)
     
-        
-    def send_command(self, func, *value):
+    def get_project_code(self):
+        """ ID: Код проекта  """
+        return self.promodem.read_holding_registers(15)
+    
+    def _write_command(self, func, *value):
         # open or reconnect TCP to server
         self.promodem.open()
         
@@ -35,4 +45,4 @@ class PromodemClient(object):
         return False
         
         
-        
+
