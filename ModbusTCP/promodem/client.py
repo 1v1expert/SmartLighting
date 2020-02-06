@@ -53,14 +53,21 @@ class PromodemClient(object):
         return self.promodem.read_holding_registers(0)[0]
     
     def get_register_values(self) -> list:
-        """ """
+        """ Получить значение однобитовых регистров, хар-их состояние дискретных входов """
         return [self.get_register_value(0), self.get_register_value(1)]
     
     def get_register_value(self, number_register: int) -> dict:
         return {number_register: self.promodem.read_discrete_inputs(number_register)[0]}
     
     def get_brightness_value_when_turned_on(self):
-        return ''
+        """ Получить уровень Яркости 0…100% при включении """
+        return self.promodem.read_holding_registers(3)[0]
+    
+    def get_brightness_step(self):
+        """ Получить шаг изменения яркости, 0…100 % в секунду """
+        return self.promodem.read_holding_registers(4)[0]
+    
+    
     
     def get_full_info(self) -> dict:
         return {
@@ -70,7 +77,9 @@ class PromodemClient(object):
             'modification_code': self.get_modification_code(),
             'project_code': self.get_project_code(),
             'wifi_signal': self.get_wifi_signal(),
-            'register_value': self.get_register_values()
+            'register_value': self.get_register_values(),
+            'brightness_value_when_turned_on': self.get_brightness_value_when_turned_on(),
+            'brightness_step': self.get_brightness_step(),
         }
     
     def _write_command(self, func, *value):
