@@ -27,10 +27,14 @@ class PromodemClient(object):
         """ Установить пороговый уровень яркости для автоматического срабатывания реле """
         return self._write_command(self.promodem.write_single_register, 2, value)
     
-    def get_wifi_signal(self) -> int:
+    def get_wifi_signal(self):
         """ Получить уровень принимаемого сигнала WiFi  """
         # return self.promodem.read_coils(14)
-        return self.promodem.read_holding_registers(14)[0]
+        wifi_signal = self.promodem.read_holding_registers(14)
+        if wifi_signal is not None:
+            return wifi_signal[0]
+        
+        return None
     
     def get_project_code(self) -> int:
         """ ID: Код проекта  """
@@ -57,7 +61,10 @@ class PromodemClient(object):
         return [self.get_register_value(0), self.get_register_value(1)]
     
     def get_register_value(self, number_register: int) -> dict:
-        return {number_register: self.promodem.read_discrete_inputs(number_register)[0]}
+        value = self.promodem.read_discrete_inputs(number_register)
+        if value is not None:
+            return {number_register: value[0]}
+        return {number_register: None}
     
     def get_brightness_value_when_turned_on(self):
         """ Получить уровень Яркости 0…100% при включении """
@@ -65,9 +72,20 @@ class PromodemClient(object):
     
     def get_brightness_step(self):
         """ Получить шаг изменения яркости, 0…100 % в секунду """
-        return self.promodem.read_holding_registers(4)[0]
+        brightness_step = self.promodem.read_holding_registers(4)
+        
+        if brightness_step is not None:
+            return brightness_step[0]
+        
+        return None
     
+    def get_minutes_to_brightness_reset(self):
+        """ Получить время через которое будет сброшена яркость на значение по умолчанию, 1…255 минут  """
+        return self.promodem.read_holding_registers(5)[0]
     
+    def get_brightness_after_reset(self):
+        """ Получить яркость, которая будет установлена при отсутствии запроса на чтение/запись"""
+        return self.promodem.read_holding_registers(6)[0]
     
     def get_full_info(self) -> dict:
         return {
@@ -80,6 +98,8 @@ class PromodemClient(object):
             'register_value': self.get_register_values(),
             'brightness_value_when_turned_on': self.get_brightness_value_when_turned_on(),
             'brightness_step': self.get_brightness_step(),
+            'minutes_to_reset_brightness': self.get_minutes_to_brightness_reset(),
+            'brightness_after_reset': self.get_brightness_after_reset()
         }
     
     def _write_command(self, func, *value):
