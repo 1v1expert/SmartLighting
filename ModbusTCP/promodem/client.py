@@ -1,5 +1,6 @@
 from ModbusTCP.core.client import ModbusClient
 from retry import retry_call
+import traceback
 
 
 class PromodemClient(object):
@@ -47,34 +48,25 @@ class PromodemClient(object):
     def get_wifi_signal(self):
         """ Получить уровень принимаемого сигнала WiFi  """
         # return self.promodem.read_coils(14)
-        wifi_signal = self.promodem.read_holding_registers(14)
-        if wifi_signal is not None:
-            return wifi_signal[0]
-        
-        return None
+        return self._get(self.promodem.read_holding_registers, 14)
     
     def get_project_code(self) -> int:
         """ ID: Код проекта  """
-        # return self.promodem.read_holding_registers(15)[0]
         return self._get(self.promodem.read_holding_registers, 15)
     
     def get_modification_code(self) -> int:
         """ ID: Код модификации  """
-        # return self.promodem.read_holding_registers(16)[0]
         return self._get(self.promodem.read_holding_registers, 16)
     
     def get_voltage_inversion(self):
-        # return self.promodem.read_holding_registers(1)[0]
         return self._get(self.promodem.read_holding_registers, 1)
     
     def get_threshold_brightness_level(self) -> int:
         """ Установить пороговый уровень яркости для автоматического срабатывания реле """
-        # return self.promodem.read_holding_registers(2)[0]
         return self._get(self.promodem.read_holding_registers, 2)
     
     def get_brightness(self) -> int:
         """ Получить яркость светильника  % 0…100 % """
-        # return self.promodem.read_holding_registers(0)[0]
         return self._get(self.promodem.read_holding_registers, 0)
     
     def get_register_values(self) -> list:
@@ -83,23 +75,14 @@ class PromodemClient(object):
     
     def get_register_value(self, number_register: int) -> dict:
         return {number_register: self._get(self.promodem.read_discrete_inputs, number_register)}
-        # if value is not None:
-        #     return {number_register: value[0]}
-        # return {number_register: None}
     
     def get_brightness_value_when_turned_on(self):
         """ Получить уровень Яркости 0…100% при включении """
         return self._get(self.promodem.read_holding_registers, 3)
-        # return self.promodem.read_holding_registers(3)[0]
     
     def get_brightness_step(self):
         """ Получить шаг изменения яркости, 0…100 % в секунду """
         return self._get(self.promodem.read_holding_registers, 4)
-        
-        # if brightness_step is not None:
-        #     return brightness_step[0]
-        #
-        # return None
     
     def get_minutes_to_brightness_reset(self):
         """ Получить время через которое будет сброшена яркость на значение по умолчанию, 1…255 минут  """
@@ -131,20 +114,19 @@ class PromodemClient(object):
         }
     
     def _get(self, func, *value):
-        import traceback
+        
         func_name = traceback.extract_stack()[-2:][0][2]
         var_name = func_name[4:]
-        print(hasattr(self, var_name), var_name)
-        if hasattr(self, var_name):
-            print('value->', getattr(self, var_name))
-        # print(s[-2:][0][2])
         
         def wrap():
             self.count_get += 1
             return func(*value)[0]
             
         try:
-            return retry_call(wrap, tries=self.ATTEMPTS)
+            result = retry_call(wrap, tries=self.ATTEMPTS)
+            if not getattr(self, var_name, None):
+                setattr(self, var_name, result)
+            return result
         except Exception as e:
             print(e)
             return None
