@@ -36,7 +36,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'modbustcp',
     'retry',
-    'internal'
+    'internal',
+    'external'
 ]
 
 MIDDLEWARE = [
