@@ -3,6 +3,13 @@ from retry import retry_call
 import traceback
 
 
+class WriteErrorException(Exception):
+    """ Buffer error. """
+    
+    def __init__(self, *args, **kwargs):  # real signature unknown
+        pass
+
+
 class PromodemClient(object):
     
     """ Promodem TCP Client"""
@@ -47,7 +54,6 @@ class PromodemClient(object):
     
     def get_wifi_signal(self):
         """ Получить уровень принимаемого сигнала WiFi  """
-        # return self.promodem.read_coils(14)
         return self._get(self.promodem.read_holding_registers, 14)
     
     def get_project_code(self) -> int:
@@ -120,7 +126,11 @@ class PromodemClient(object):
         
         def wrap():
             self.count_get += 1
-            return func(*value)[0]
+            try:
+                return func(*value)[0]
+            except Exception as e:
+                Exception("Func %s is not ok, data not received" % func_name)
+                
             
         try:
             result = retry_call(wrap, tries=self.ATTEMPTS)
@@ -133,20 +143,25 @@ class PromodemClient(object):
         
     def _write_command(self, func, *value):
         # open or reconnect TCP to server
-        self.promodem.open()
         
-        for i in range(self.ATTEMPTS):
+        def wrap():
+            self.count_write += 1
             if not self.promodem.is_open():
                 if not self.promodem.open():
-                    continue
+                    self.promodem.close()
+                    raise ConnectionError("Exception: promodem is closed")
 
-            if self.promodem.is_open():
-                self.count_write += 1
-                is_ok = func(*value)
-                if is_ok:
-                    return True
-                
-        return False
+            is_ok = func(*value)
+            if not is_ok:
+                raise WriteErrorException("Exception: write error")
+        
+        try:
+            return retry_call(wrap, tries=self.ATTEMPTS)
+        except Exception as e:
+            print(e)
+            return False
+        
+
         
         
 
