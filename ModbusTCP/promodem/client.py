@@ -102,17 +102,23 @@ class PromodemClient(object):
     
     def get_full_info(self) -> dict:
         return {
-            'brightness': self.get_brightness(),
-            'threshold_brightness_level': self.get_threshold_brightness_level(),
-            'voltage_inversion': self.get_voltage_inversion(),
-            'modification_code': self.get_modification_code(),
-            'project_code': self.get_project_code(),
-            'wifi_signal': self.get_wifi_signal(),
-            'register_value': self.get_register_values(),
-            'brightness_value_when_turned_on': self.get_brightness_value_when_turned_on(),
-            'brightness_step': self.get_brightness_step(),
-            'minutes_to_reset_brightness': self.get_minutes_to_brightness_reset(),
+            'brightness': self.get_brightness() if self.brightness is None else self.brightness,
+            'threshold_brightness_level': self.get_threshold_brightness_level()
+            if self.threshold_brightness_level is None else self.threshold_brightness_level,
+            'voltage_inversion': self.get_voltage_inversion() if self.voltage_inversion is None
+            else self.voltage_inversion,
+            'modification_code': self.get_modification_code() if self.modification_code is None
+            else self.modification_code,
+            'project_code': self.get_project_code() if self.project_code is None else self.project_code,
+            'wifi_signal': self.get_wifi_signal() if self.wifi_signal is None else self.wifi_signal,
+            'register_value': self.get_register_values() if self.register_values is None else self.register_values,
+            'brightness_value_when_turned_on': self.get_brightness_value_when_turned_on()
+            if self.brightness_value_when_turned_on is None else self.brightness_value_when_turned_on,
+            'brightness_step': self.get_brightness_step() if self.brightness_step is None else self.brightness_step,
+            'minutes_to_reset_brightness': self.get_minutes_to_brightness_reset()
+            if self.minutes_to_brightness_reset is None else self.minutes_to_brightness_reset,
             'brightness_after_reset': self.get_brightness_after_reset()
+            if self.brightness_after_reset is None else self.brightness_after_reset
         }
     
     def _write_command(self, func, *value):
