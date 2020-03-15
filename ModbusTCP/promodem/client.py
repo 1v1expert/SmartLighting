@@ -12,7 +12,20 @@ class PromodemClient(object):
         
         self.promodem = ModbusClient(host=host, port=port, unit_id=unit_id, timeout=timeout,
                                      debug=debug, auto_open=auto_open, auto_close=auto_close)
-    
+        self.brightness = None
+        self.voltage_inversion = None
+        self.threshold_brightness_level = None
+        self.wifi_signal = None
+        self.project_code = None
+        self.modification_code = None
+        self.voltage_inversion = None
+        self.threshold_brightness_level = None
+        self.register_values = None
+        self.brightness_value_when_turned_on = None
+        self.brightness_step = None
+        self.minutes_to_brightness_reset = None
+        self.brightness_after_reset = None
+        
     def set_brightness(self, value: int) -> bool:
         """ Установить яркость светильника
             Modbus function WRITE_SINGLE_REGISTER (0x06) | DEC=0, | reg_value
