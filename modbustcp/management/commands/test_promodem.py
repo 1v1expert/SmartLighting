@@ -1,7 +1,5 @@
 from django.core.management.base import BaseCommand
-from ModbusTCP.core.client import ModbusClient
-from ModbusTCP.promodem.app import start
-from ModbusTCP.promodem.client import PromodemClient
+from modbustcp.promodem.client import PromodemClient
 from time import sleep
 
 
