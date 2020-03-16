@@ -1,5 +1,5 @@
-from modbustcp.core.client import ModbusClient
-from retry import retry_call
+from core.modbustcp.core.client import ModbusClient
+from core.retry import retry_call
 import traceback
 
 

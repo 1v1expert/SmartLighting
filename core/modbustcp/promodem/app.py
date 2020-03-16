@@ -1,4 +1,4 @@
-from modbustcp.core.client import ModbusClient
+from core.modbustcp.core.client import ModbusClient
 
 
 def start():

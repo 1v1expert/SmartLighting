@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from modbustcp.promodem.client import PromodemClient
+from core.modbustcp.promodem.client import PromodemClient
 from time import sleep
 
 
