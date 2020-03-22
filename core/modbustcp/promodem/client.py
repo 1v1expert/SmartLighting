@@ -22,12 +22,12 @@ class PromodemClient(object):
         self.promodem = ModbusClient(host=host, port=port, unit_id=unit_id, timeout=timeout,
                                      debug=debug, auto_open=auto_open, auto_close=auto_close)
         self.brightness = None
-        self.voltage_inversion = None
-        self.threshold_brightness_level = None
+        # self.voltage_inversion = None
+        # self.threshold_brightness_level = None
         self.wifi_signal = None
         self.project_code = None
         self.modification_code = None
-        self.voltage_inversion = None
+        self.voltage_inversion: bool = None
         self.threshold_brightness_level = None
         self.register_values = None
         self.brightness_value_when_turned_on = None
@@ -64,8 +64,8 @@ class PromodemClient(object):
         """ ID: Код модификации  """
         return self._get(self.promodem.read_holding_registers, 16)
     
-    def get_voltage_inversion(self):
-        return self._get(self.promodem.read_holding_registers, 1)
+    def get_voltage_inversion(self) -> bool:
+        return bool(self._get(self.promodem.read_holding_registers, 1))
     
     def get_threshold_brightness_level(self) -> int:
         """ Установить пороговый уровень яркости для автоматического срабатывания реле """
@@ -79,8 +79,8 @@ class PromodemClient(object):
         """ Получить значение однобитовых регистров, хар-их состояние дискретных входов """
         return [self.get_register_value(0), self.get_register_value(1)]
     
-    def get_register_value(self, number_register: int) -> dict:
-        return {number_register: self._get(self.promodem.read_discrete_inputs, number_register)}
+    def get_register_value(self, number_register: int) -> bool:
+        return self._get(self.promodem.read_discrete_inputs, number_register)
     
     def get_brightness_value_when_turned_on(self):
         """ Получить уровень Яркости 0…100% при включении """
@@ -109,7 +109,7 @@ class PromodemClient(object):
             else self.modification_code,
             'project_code': self.get_project_code() if self.project_code is None else self.project_code,
             'wifi_signal': self.get_wifi_signal() if self.wifi_signal is None else self.wifi_signal,
-            'register_value': self.get_register_values() if self.register_values is None else self.register_values,
+            'register_values': self.get_register_values() if self.register_values is None else self.register_values,
             'brightness_value_when_turned_on': self.get_brightness_value_when_turned_on()
             if self.brightness_value_when_turned_on is None else self.brightness_value_when_turned_on,
             'brightness_step': self.get_brightness_step() if self.brightness_step is None else self.brightness_step,
@@ -131,10 +131,11 @@ class PromodemClient(object):
             except Exception as e:
                 Exception("Func %s is not ok, data not received" % func_name)
                 
-            
         try:
             result = retry_call(wrap, tries=self.ATTEMPTS)
             if not getattr(self, var_name, None):
+                if var_name == 'voltage_inversion':
+                    pass
                 setattr(self, var_name, result)
             return result
         except Exception as e:

@@ -1,14 +1,17 @@
 from django.core.management.base import BaseCommand
 from core.modbustcp.promodem.client import PromodemClient
 from time import sleep
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 def turn_switch(host="192.168.2.55", bright=0, client=None):
     if client is None:
         client = PromodemClient(host=host, debug=False, auto_close=False)
-    result = client.set_brightness(bright)
-    print(result)
-    print(client.get_full_info())
+    client.set_brightness(bright)
+    # print(client.get_full_info())
+    logger.info(client.get_full_info())
     return client
 
 
