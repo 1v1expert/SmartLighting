@@ -16,6 +16,6 @@ Including another URLconf
 from django.conf.urls import url
 
 
-urlpatterns = [
-    url(r'', 'test')
-]
+urlpatterns = []
+#     url(r'', 'test')
+# # ]

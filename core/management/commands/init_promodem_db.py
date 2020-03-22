@@ -1,8 +1,8 @@
 from django.core.management.base import BaseCommand
 from django.contrib.auth import get_user_model
+from django.db import models
 
 from core.models import Promodem
-from django.db import models
 from core.modbustcp.promodem.client import PromodemClient
 
 User = get_user_model()
