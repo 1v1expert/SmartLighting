@@ -160,7 +160,13 @@ class PromodemClient(object):
         except Exception as e:
             print(e)
             return False
-        
+
+    def close(self):
+        if self.promodem.is_open():
+            self.promodem.close()
+            return True
+        self.promodem.close()
+        return False
 
         
         

@@ -25,5 +25,25 @@ class Base(models.Model):
         verbose_name_plural = "Базовые модели"
         
         
-class PromodemClient(models.Model):
-    pass
+class PromodemModel(Base):
+    title = models.CharField(verbose_name='Наименование', max_length=255)
+    ip = models.GenericIPAddressField()
+    
+    brightness = models.IntegerField(verbose_name=' Яркость светильника ')
+    wifi_signal = models.IntegerField(verbose_name=' Уровень принимаемого сигнала WiFi ')
+    project_code = models.IntegerField(verbose_name=' Код проекта ')
+    modification_code = models.IntegerField(verbose_name=' Код модификации ')
+    voltage_inversion = models.BooleanField(verbose_name=' Инверсия напряжения ')
+    threshold_brightness_level = models.IntegerField(verbose_name='Пороговый уровень яркости для автоматического срабатывания реле ')
+    register_values = models.CharField(verbose_name=' Значения однобитовых регистров ', max_length=2)
+    brightness_value_when_turned_on = models.IntegerField(verbose_name='Уровень Яркости 0…100% при включении ')
+    brightness_step = models.IntegerField(verbose_name=' Шаг изменения яркости ')
+    minutes_to_brightness_reset = models.IntegerField(verbose_name='Количество минут до сброса яркости на дефолт')
+    brightness_after_reset = models.IntegerField(verbose_name='Дефолтная яркость')
+    
+    class Meta:
+        verbose_name = "Промодем "
+        verbose_name_plural = "Промодемы "
+    
+    def __str__(self):
+        return f' промодем {self.title} <{self.ip}>'
