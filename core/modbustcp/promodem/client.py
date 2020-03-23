@@ -113,7 +113,7 @@ class PromodemClient(object):
             'brightness_value_when_turned_on': self.get_brightness_value_when_turned_on()
             if self.brightness_value_when_turned_on is None else self.brightness_value_when_turned_on,
             'brightness_step': self.get_brightness_step() if self.brightness_step is None else self.brightness_step,
-            'minutes_to_reset_brightness': self.get_minutes_to_brightness_reset()
+            'minutes_to_brightness_reset': self.get_minutes_to_brightness_reset()
             if self.minutes_to_brightness_reset is None else self.minutes_to_brightness_reset,
             'brightness_after_reset': self.get_brightness_after_reset()
             if self.brightness_after_reset is None else self.brightness_after_reset

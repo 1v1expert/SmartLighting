@@ -26,21 +26,21 @@ def filling_db():
         except models.ObjectDoesNotExist:
             obj = Promodem(ip=promodem["ip"], title=promodem["title"])
 
-        client = PromodemClient(host=promodem["ip"])
+        client = PromodemClient(host=promodem["ip"], debug=False)
         info = client.get_full_info()
-        
-        print(info)
-        
+
         for key in info.keys():
             if key == 'register_values':
                 obj.register_values = '%d%d' % (info[key][0], info[key][1])
                 continue
                 
-            if getattr(obj, key, None):
+            if not getattr(obj, key, None):
                 setattr(obj, key, info[key])
-            
-            obj.save()
-            
+        
+        obj.created_by = User.objects.first()
+        obj.updated_by = User.objects.first()
+        obj.save()
+        
 
 class Command(BaseCommand):
     help = 'Init DB'
