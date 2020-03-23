@@ -87,6 +87,7 @@ class Promodem(Base):
         """
         Saves model and set initial state.
         """
+        print(self.pk)
         change_state(self)
         super(Promodem, self).save(*args, **kwargs)
         self.__initial = self._dict
