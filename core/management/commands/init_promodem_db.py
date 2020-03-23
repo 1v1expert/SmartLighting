@@ -39,7 +39,7 @@ def filling_db():
         
         obj.created_by = User.objects.first()
         obj.updated_by = User.objects.first()
-        obj.save()
+        obj.save(is_create=True)
         
 
 class Command(BaseCommand):
