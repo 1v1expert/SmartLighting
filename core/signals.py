@@ -5,6 +5,7 @@ CHANGE_FIELDS = ('brightness', 'voltage_inversion', 'threshold_brightness_level'
 
 
 def change_state(instance):
+    print(instance.pk)
     if instance.has_changed:
         for field in instance.changed_fields:
             if field in CHANGE_FIELDS:
