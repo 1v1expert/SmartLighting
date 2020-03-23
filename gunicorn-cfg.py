@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 
-bind = '0.0.0.0:5005'
-workers = 4
+bind = '127.0.0.1:5006'
+workers = 1
 accesslog = '-'
 loglevel = 'debug'
 capture_output = True
