@@ -155,6 +155,7 @@ class PromodemClient(object):
             is_ok = func(*value)
             if not is_ok:
                 raise WriteErrorException("Exception: write error")
+            return is_ok
         
         try:
             return retry_call(wrap, tries=self.ATTEMPTS)

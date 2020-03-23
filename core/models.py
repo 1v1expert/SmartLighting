@@ -1,7 +1,9 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.forms.models import model_to_dict
 import uuid
 import logging
+from core.signals import change_state
 
 logger = logging.getLogger(__name__)
 
@@ -55,6 +57,44 @@ class Promodem(Base):
     
     def __str__(self):
         return f' промодем {self.title} <{self.ip}>'
+    
+    def __init__(self, *args, **kwargs):
+        super(Promodem, self).__init__(*args, **kwargs)
+        self.__initial = self._dict
+
+    @property
+    def diff(self):
+        d1 = self.__initial
+        d2 = self._dict
+        diffs = [(k, (v, d2[k])) for k, v in d1.items() if v != d2[k]]
+        return dict(diffs)
+
+    @property
+    def has_changed(self):
+        return bool(self.diff)
+
+    @property
+    def changed_fields(self):
+        return self.diff.keys()
+
+    def get_field_diff(self, field_name):
+        """
+        Returns a diff for field if it's changed and None otherwise.
+        """
+        return self.diff.get(field_name, None)
+
+    def save(self, *args, **kwargs):
+        """
+        Saves model and set initial state.
+        """
+        change_state(self)
+        super(Promodem, self).save(*args, **kwargs)
+        self.__initial = self._dict
+
+    @property
+    def _dict(self):
+        return model_to_dict(self, fields=[field.name for field in
+                             self._meta.fields])
 
 # https://github.com/trombastic/PyScada
 # https://pymodbus.readthedocs.io/

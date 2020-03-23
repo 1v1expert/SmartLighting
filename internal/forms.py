@@ -59,13 +59,37 @@ class SignUpForm(UserCreationForm):
  
         
 class PromodemForm(forms.ModelForm):
-    # username = forms.CharField(
-    #     widget=forms.TextInput(
-    #         attrs={
-    #             "placeholder" : "Username",
-    #             "class": "form-control"
-    #         }
-    #     ))
+    ip = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                "placeholder": "255.255.255.255",
+                "class": "form-control"
+            }
+        ), label='Ip адрес')
+
+    title = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                "placeholder": "promodem_v1",
+                "class": "form-control"
+            }
+        ), label='Наименование')
+
+    brightness = forms.IntegerField(
+        widget=forms.TextInput(
+            attrs={
+                "placeholder": "100",
+                "class": "form-control"
+            }
+        ), label='Яркость')
+
+    threshold_brightness_level = forms.IntegerField(
+        widget=forms.TextInput(
+            attrs={
+                "placeholder": "100",
+                "class": "form-control"
+            }
+        ), label='Порог срабатывания реле')
     # email = forms.EmailField(
     #     widget=forms.EmailInput(
     #         attrs={
@@ -90,5 +114,5 @@ class PromodemForm(forms.ModelForm):
 
     class Meta:
         model = Promodem
-        fields = ('ip', 'title')
+        fields = ('ip', 'title', 'brightness', 'threshold_brightness_level')
 

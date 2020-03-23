@@ -36,22 +36,34 @@
                 <div class="card-body">
 
                     <div class="row">
-                      <div class="col-md-3 px-md-1">
-                        <div class="form-group">
-                          <label>Title</label>
-                          {{ form.title }}
+                        <div class="col-md-3 px-md-1">
+                            <div class="form-group">
+                                <label>{{ form.title.label }}</label>
+                                {{ form.title }}
+                            </div>
                         </div>
-                      </div>
+                        <div class="col-md-3 px-md-1">
+                            <div class="form-group">
+                                <label>{{ form.brightness.label }}</label>
+                                {{ form.brightness }}
+                            </div>
+                        </div>
                     </div>
                     <span class="text-danger">{{ form.title.errors }}</span>
 
                     <div class="row">
-                      <div class="col-md-3 px-md-1">
-                        <div class="form-group">
-                          <label>Ip</label>
-                          {{ form.ip }}
+                        <div class="col-md-3 px-md-1">
+                            <div class="form-group">
+                                <label>{{ form.ip.label }}</label>
+                                {{ form.ip }}
+                            </div>
                         </div>
-                      </div>
+                        <div class="col-md-3 px-md-1">
+                            <div class="form-group">
+                                <label>{{ form.threshold_brightness_level.label }}</label>
+                                {{ form.threshold_brightness_level }}
+                            </div>
+                        </div>
                     </div>
                     <span class="text-danger">{{ form.ip.errors }}</span>
 
