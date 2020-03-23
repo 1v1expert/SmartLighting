@@ -51,10 +51,7 @@ def promodem_detail_view(request, pk):
         if form.is_valid():
             form.save()
             
-            msg = 'User created.'
-            success = True
-            
-            # return redirect("/login/")
+            return redirect("/promodem/")
         
         else:
             msg = 'Form is not valid'
