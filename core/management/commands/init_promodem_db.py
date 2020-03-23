@@ -28,7 +28,7 @@ def filling_db():
 
         client = PromodemClient(host=promodem["ip"], debug=False)
         info = client.get_full_info()
-
+        print(info)
         for key in info.keys():
             if key == 'register_values':
                 obj.register_values = '%d%d' % (info[key][0], info[key][1])
