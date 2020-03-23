@@ -5,10 +5,10 @@
 
         <div class="logo">
           <a href="https://appseed.us/admin-dashboards/django-dashboard-black" class="simple-text logo-mini">
-            BD
+            logo
           </a>
           <a href="https://appseed.us/admin-dashboards/django-dashboard-black" class="simple-text logo-normal">
-            Django Dashboard
+            Main Server
           </a>
         </div>
 
@@ -21,21 +21,9 @@
             </a>
           </li>
           <li>
-            <a href="/ui-icons.html">
+            <a href="{% url 'promodem' %}">
               <i class="tim-icons icon-atom"></i>
-              <p>Icons</p>
-            </a>
-          </li>
-          <li>
-            <a href="/ui-maps.html">
-              <i class="tim-icons icon-pin"></i>
-              <p>Maps</p>
-            </a>
-          </li>
-          <li>
-            <a href="/ui-notifications.html">
-              <i class="tim-icons icon-bell-55"></i>
-              <p>Notifications</p>
+              <p>Promodem</p>
             </a>
           </li>
           <li>
@@ -51,32 +39,11 @@
             </a>
           </li>
           <li>
-            <a href="/ui-typography.html">
-              <i class="tim-icons icon-align-center"></i>
-              <p>Typography</p>
-            </a>
-          </li>
-
-          <li>
-            <a href="/page-rtl-support.html">
-              <i class="tim-icons icon-world"></i>
-              <p>RTL Support</p>
-            </a>
-          </li>
-          <li>
             <a href="{% url 'logout' %}" >
               <i class="tim-icons icon-user-run"></i>
               <p>Logout</p>
             </a>
           </li>
-
-          <li class="active-pro">
-            <a href="https://appseed.us/admin-dashboards/django-dashboard-black">
-              <i class="tim-icons icon-spaceship"></i>
-              <p>See product</p>
-            </a>
-          </li>
-        </ul>
         {% endif %}
 
       </div>

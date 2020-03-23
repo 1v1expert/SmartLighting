@@ -5,7 +5,9 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.forms.utils import ErrorList
-from internal.forms import LoginForm, SignUpForm
+
+from internal.forms import LoginForm, SignUpForm, PromodemForm
+from core.models import Promodem
 from django.template import loader
 
 from django.http import HttpResponse
@@ -26,6 +28,43 @@ def pages_view(request):
     except:
         template = loader.get_template('pages/error-404.html')
         return HttpResponse(template.render(context, request))
+
+
+@login_required(login_url="/login/")
+def promodem_view(request):
+    template = loader.get_template('pages/promodem.html')
+    return HttpResponse(template.render({'promodems': Promodem.objects.all()}, request))
+
+
+@login_required(login_url="/login/")
+def promodem_detail_view(request, pk):
+    msg = None
+    success = False
+    
+    try:
+        promodem = Promodem.objects.get(pk=pk)
+    except:
+        msg = f'Not found promodem with pk = {pk}'
+    
+    if request.method == "POST":
+        form = PromodemForm(instance=promodem, data=request.POST)
+        if form.is_valid():
+            form.save()
+            
+            msg = 'User created.'
+            success = True
+            
+            # return redirect("/login/")
+        
+        else:
+            msg = 'Form is not valid'
+    else:
+        form = PromodemForm(instance=promodem)
+    
+    return render(request, "pages/promodem_detail.html", {"form": form, "msg": msg, "success": success})
+    
+    # template = loader.get_template('pages/promodem.html')
+    # return HttpResponse(template.render({'promodems': Promodem.objects.all()}, request))
 
 
 def login_view(request):

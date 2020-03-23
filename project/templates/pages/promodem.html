@@ -1,0 +1,65 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %} UI Tables {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="card ">
+      <div class="card-header">
+        <h4 class="card-title"> Simple Table</h4>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table tablesorter " id="">
+            <thead class=" text-primary">
+              <tr>
+                <th>Title</th>
+                <th>Ip</th>
+                <th>brightness</th>
+                <th>project_code</th>
+                <th>modification_code</th>
+                <th>voltage_inversion</th>
+                <th>threshold_brightness_level</th>
+                <th>register_values</th>
+                <th>brightness_value_when_turned_on</th>
+                <th>brightness_step</th>
+                <th>minutes_to_brightness_reset</th>
+                <th>brightness_after_reset</th>
+              </tr>
+            </thead>
+
+            <tbody>
+            {% for promodem in promodems %}
+              <tr>
+                <td><a href="{% url 'promodem_detail' promodem.pk %}">{{promodem.title}}</a></td>
+                <td>{{promodem.ip}}</td>
+                <td>{{promodem.brightness}}</td>
+                <td>{{promodem.wifi_signal}}</td>
+                <td>{{promodem.project_code}}</td>
+                <td>{{promodem.modification_code}}</td>
+                <td>{{promodem.voltage_inversion}}</td>
+                <td>{{promodem.threshold_brightness_level}}</td>
+                <td>{{promodem.register_values}}</td>
+                <td>{{promodem.brightness_value_when_turned_on}}</td>
+                <td>{{promodem.brightness_step}}</td>
+                <td>{{promodem.minutes_to_brightness_reset}}</td>
+                <td>{{promodem.brightness_after_reset}}</td>
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}
