@@ -17,6 +17,9 @@ promodems = [
         "title": "promodem_v2",
     }]
 
+default = {
+
+}
 
 def filling_db():
     for promodem in promodems:
