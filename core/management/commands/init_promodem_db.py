@@ -23,8 +23,9 @@ default = dict(
     project_code=0,
     modification_code=0,
     voltage_inversion=False,
-    
     threshold_brightness_level=0,
+    register_values='00',
+    brightness_value_when_turned_on=0
 )
 
 def filling_db():
