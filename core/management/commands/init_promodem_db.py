@@ -17,9 +17,11 @@ promodems = [
         "title": "promodem_v2",
     }]
 
-default = {
-
-}
+default = dict(
+    brightness=0,
+    wifi_signal=0,
+    project_code=0
+)
 
 def filling_db():
     for promodem in promodems:
