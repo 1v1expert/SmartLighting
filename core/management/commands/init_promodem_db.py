@@ -20,7 +20,9 @@ promodems = [
 default = dict(
     brightness=0,
     wifi_signal=0,
-    project_code=0
+    project_code=0,
+    modification_code=0,
+    voltage_inversion=False,
 )
 
 def filling_db():
