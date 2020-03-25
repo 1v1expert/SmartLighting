@@ -47,7 +47,7 @@ class Promodem(Base):
         verbose_name='Пороговый уровень яркости для автоматического срабатывания реле ', null=True)
     register_values = models.CharField(verbose_name=' Значения однобитовых регистров ', max_length=2, null=True)
     brightness_value_when_turned_on = models.IntegerField(verbose_name='Уровень Яркости 0…100% при включении ', null=True)
-    brightness_step = models.IntegerField(verbose_name=' Шаг изменения яркости ')
+    brightness_step = models.IntegerField(verbose_name=' Шаг изменения яркости ', null=True)
     minutes_to_brightness_reset = models.IntegerField(verbose_name='Количество минут до сброса яркости на дефолт')
     brightness_after_reset = models.IntegerField(verbose_name='Дефолтная яркость')
     
