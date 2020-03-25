@@ -42,7 +42,7 @@ class Promodem(Base):
     wifi_signal = models.IntegerField(verbose_name=' Уровень принимаемого сигнала WiFi ', null=True)
     project_code = models.IntegerField(verbose_name=' Код проекта ', null=True)
     modification_code = models.IntegerField(verbose_name=' Код модификации ', null=True)
-    voltage_inversion = models.BooleanField(verbose_name=' Инверсия напряжения ')
+    voltage_inversion = models.BooleanField(verbose_name=' Инверсия напряжения ', null=True)
     threshold_brightness_level = models.IntegerField(
         verbose_name='Пороговый уровень яркости для автоматического срабатывания реле ')
     register_values = models.CharField(verbose_name=' Значения однобитовых регистров ', max_length=2)
