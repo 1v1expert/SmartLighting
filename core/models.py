@@ -38,7 +38,7 @@ class Promodem(Base):
                             help_text="for TCP and UDP enter network port as number "
                                       "(def. 502, for serial ASCII and RTU enter serial port (/dev/pts/13))")
     
-    brightness = models.IntegerField(verbose_name=' Яркость светильника ')
+    brightness = models.IntegerField(verbose_name=' Яркость светильника ', null=None)
     wifi_signal = models.IntegerField(verbose_name=' Уровень принимаемого сигнала WiFi ')
     project_code = models.IntegerField(verbose_name=' Код проекта ')
     modification_code = models.IntegerField(verbose_name=' Код модификации ')
