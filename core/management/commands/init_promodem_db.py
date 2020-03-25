@@ -17,44 +17,18 @@ promodems = [
         "title": "promodem_v2",
     }]
 
-default = dict(
-    brightness=0,
-    wifi_signal=0,
-    project_code=0,
-    modification_code=0,
-    voltage_inversion=False,
-    threshold_brightness_level=0,
-    register_values='00',
-    brightness_value_when_turned_on=0,
-    brightness_step=0,
-    minutes_to_brightness_reset=0,
-    brightness_after_reset=0
-)
-
 
 def filling_db():
     for promodem in promodems:
-        try:
-            obj = Promodem.objects.get(ip=promodem["ip"], title=promodem["title"])
-            continue  # not update
-        except models.ObjectDoesNotExist:
-            obj = Promodem(ip=promodem["ip"], title=promodem["title"])
+        objs = []
+        obj, created = Promodem.objects.get_or_create(ip=promodem["ip"], title=promodem["title"],
+                                                      defaults={"created_by":User.objects.first(),
+                                                                "updated_by": User.objects.first()})
+        if created:
+            objs.append(obj)
+            
+    Promodem.objects.bulk_create(objs)
 
-        client = PromodemClient(host=promodem["ip"], debug=False)
-        info = client.get_full_info()
-
-        for key in info.keys():
-            if key == 'register_values':
-                obj.register_values = '%d%d' % (info[key][0], info[key][1])
-                continue
-                
-            if not getattr(obj, key, None):
-                setattr(obj, key, info[key])
-        
-        obj.created_by = User.objects.first()
-        obj.updated_by = User.objects.first()
-        obj.save(is_create=True)
-        
 
 class Command(BaseCommand):
     help = 'Init DB'
