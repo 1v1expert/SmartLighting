@@ -153,7 +153,6 @@ class PromodemClient(object):
         
         func_name = traceback.extract_stack()[-2:][0][2]
         var_name = func_name[4:]  # get var name call func
-        print(var_name, func_name)
         
         def wrap():
             self.count_write += 1
