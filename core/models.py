@@ -4,6 +4,7 @@ from django.forms.models import model_to_dict
 import uuid
 import logging
 from core.signals import change_state
+from core.modbustcp.promodem.client import PromodemClient
 
 logger = logging.getLogger(__name__)
 
@@ -51,17 +52,22 @@ class Promodem(Base):
     minutes_to_brightness_reset = models.IntegerField(verbose_name='Количество минут до сброса яркости на дефолт', null=True)
     brightness_after_reset = models.IntegerField(verbose_name='Дефолтная яркость', null=True)
     
+    objects = models.Manager()
+    
     class Meta:
         verbose_name = "Промодем "
         verbose_name_plural = "Промодемы "
     
     def __str__(self):
-        return f' промодем {self.title} <{self.ip}>'
+        return f'{self.title} <{self.ip}>'
     
     def __init__(self, *args, **kwargs):
         super(Promodem, self).__init__(*args, **kwargs)
         self.__initial = self._dict
-
+        
+    def get_client(self):
+        return PromodemClient(host=self.ip, debug=False)
+    
     @property
     def diff(self):
         d1 = self.__initial

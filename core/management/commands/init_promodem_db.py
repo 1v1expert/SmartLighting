@@ -15,14 +15,15 @@ promodems = [
     {
         "ip": "192.168.2.66",
         "title": "promodem_v2",
-    }]
+    }
+]
 
 
 def filling_db():
     for promodem in promodems:
         objs = []
         obj, created = Promodem.objects.get_or_create(ip=promodem["ip"], title=promodem["title"],
-                                                      defaults={"created_by":User.objects.first(),
+                                                      defaults={"created_by": User.objects.first(),
                                                                 "updated_by": User.objects.first()})
         if created:
             objs.append(obj)

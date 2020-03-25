@@ -133,17 +133,27 @@ class PromodemClient(object):
                 
         try:
             result = retry_call(wrap, tries=self.ATTEMPTS)
-            if not getattr(self, var_name, None):
+            
+            if hasattr(self, var_name):
                 if var_name == 'voltage_inversion':
-                    pass
+                    setattr(self, var_name, bool(result))
                 setattr(self, var_name, result)
+                
             return result
         except Exception as e:
             print(e)
+            
+            if hasattr(self, var_name):
+                setattr(self, var_name, None)
+                
             return None
         
     def _write_command(self, func, *value):
         # open or reconnect TCP to server
+        
+        func_name = traceback.extract_stack()[-2:][0][2]
+        var_name = func_name[4:]  # get var name call func
+        print(var_name, func_name)
         
         def wrap():
             self.count_write += 1
@@ -153,14 +163,29 @@ class PromodemClient(object):
                     raise ConnectionError("Exception: promodem is closed")
 
             is_ok = func(*value)
+            
             if not is_ok:
                 raise WriteErrorException("Exception: write error")
             return is_ok
         
         try:
-            return retry_call(wrap, tries=self.ATTEMPTS)
+            result = retry_call(wrap, tries=self.ATTEMPTS)
+            
+            if hasattr(self, var_name):
+                if var_name == 'voltage_inversion':
+                    setattr(self, var_name, bool(value[1]))
+                setattr(self, var_name, value[1])
+            
+            return result
+        
         except Exception as e:
             print(e)
+            
+            if hasattr(self, var_name):
+                if var_name == 'voltage_inversion':
+                    pass
+                setattr(self, var_name, None)
+                
             return False
 
     def close(self):
