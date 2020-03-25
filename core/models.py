@@ -39,7 +39,7 @@ class Promodem(Base):
                                       "(def. 502, for serial ASCII and RTU enter serial port (/dev/pts/13))")
     
     brightness = models.IntegerField(verbose_name=' Яркость светильника ', null=None)
-    wifi_signal = models.IntegerField(verbose_name=' Уровень принимаемого сигнала WiFi ')
+    wifi_signal = models.IntegerField(verbose_name=' Уровень принимаемого сигнала WiFi ', null=True)
     project_code = models.IntegerField(verbose_name=' Код проекта ')
     modification_code = models.IntegerField(verbose_name=' Код модификации ')
     voltage_inversion = models.BooleanField(verbose_name=' Инверсия напряжения ')
