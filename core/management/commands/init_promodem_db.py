@@ -31,6 +31,7 @@ default = dict(
     brightness_after_reset=0
 )
 
+
 def filling_db():
     for promodem in promodems:
         try:
