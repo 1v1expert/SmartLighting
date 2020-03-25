@@ -32,7 +32,7 @@ class Base(models.Model):
 
 class Promodem(Base):
     title = models.CharField(verbose_name='Наименование', max_length=255)
-    ip = models.GenericIPAddressField()
+    ip = models.GenericIPAddressField(verbose_name=' Ip-адрес ')
     port = models.CharField(default='502',
                             max_length=400,
                             help_text="for TCP and UDP enter network port as number "
