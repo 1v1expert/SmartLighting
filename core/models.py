@@ -102,8 +102,18 @@ class Promodem(Base):
     @property
     def _dict(self):
         return model_to_dict(self, fields=[field.name for field in
-                             self._meta.fields])
+                                           self._meta.fields])
 
 # https://github.com/trombastic/PyScada
 # https://pymodbus.readthedocs.io/
 
+
+class Group(Base):
+    title = models.CharField(verbose_name='Наименование', max_length=255)
+    promodem = models.ManyToManyField(Promodem, related_name='groups')
+
+    objects = models.Manager()
+    
+    class Meta:
+        verbose_name = "Группа "
+        verbose_name_plural = "Группы "
