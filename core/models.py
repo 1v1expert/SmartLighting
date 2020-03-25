@@ -44,7 +44,7 @@ class Promodem(Base):
     modification_code = models.IntegerField(verbose_name=' Код модификации ', null=True)
     voltage_inversion = models.BooleanField(verbose_name=' Инверсия напряжения ', null=True)
     threshold_brightness_level = models.IntegerField(
-        verbose_name='Пороговый уровень яркости для автоматического срабатывания реле ')
+        verbose_name='Пороговый уровень яркости для автоматического срабатывания реле ', null=True)
     register_values = models.CharField(verbose_name=' Значения однобитовых регистров ', max_length=2)
     brightness_value_when_turned_on = models.IntegerField(verbose_name='Уровень Яркости 0…100% при включении ')
     brightness_step = models.IntegerField(verbose_name=' Шаг изменения яркости ')
