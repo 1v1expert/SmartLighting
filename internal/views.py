@@ -3,7 +3,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
 
 from internal.forms import LoginForm, SignUpForm, PromodemForm
 from core.models import Promodem
