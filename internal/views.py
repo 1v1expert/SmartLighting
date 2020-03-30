@@ -108,3 +108,9 @@ def register_user(request):
     
     return render(request, "accounts/register.html", {"form": form, "msg": msg, "success": success})
 
+def view():
+    pass
+
+def view2():
+    pass
+
