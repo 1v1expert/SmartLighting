@@ -110,7 +110,7 @@ class Promodem(Base):
 
 class Group(Base):
     title = models.CharField(verbose_name='Наименование', max_length=255)
-    promodem = models.ManyToManyField(Promodem, related_name='groups')
+    devices = models.ManyToManyField(Promodem, related_name='groups')
 
     objects = models.Manager()
     

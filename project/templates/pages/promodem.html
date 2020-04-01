@@ -58,11 +58,10 @@
             </thead>
 
             <tbody>
-            {% for promodem in promodems %}
+            {% for group in groups %}
               <tr>
-                <td><a href="{% url 'promodem_detail' promodem.pk %}">{{promodem.title}}</a></td>
-                <td>{{promodem.brightness}}</td>
-                <td>{{promodem.wifi_signal}}</td>
+                <td><a href="{% url 'promodem_detail' group.pk %}">{{group.title}}</a></td>
+                <td>{{group.devices}}</td>
               </tr>
             {% endfor %}
             </tbody>
