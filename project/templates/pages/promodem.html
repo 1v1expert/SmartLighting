@@ -40,6 +40,39 @@
   </div>
 </div>
 
+<div class="row">
+  <div class="col-md-12">
+    <div class="card ">
+      <div class="card-header">
+        <h4 class="card-title"> Список устройств</h4>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table tablesorter " id="">
+            <thead class=" text-primary">
+              <tr>
+                <th>Наименование</th>
+                <th>Яркость</th>
+                <th>Wi-Fi сигнал</th>
+              </tr>
+            </thead>
+
+            <tbody>
+            {% for promodem in promodems %}
+              <tr>
+                <td><a href="{% url 'promodem_detail' promodem.pk %}">{{promodem.title}}</a></td>
+                <td>{{promodem.brightness}}</td>
+                <td>{{promodem.wifi_signal}}</td>
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 {% endblock content %}
 
 <!-- Specific Page JS goes HERE  -->
