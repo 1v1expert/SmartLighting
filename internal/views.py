@@ -31,7 +31,7 @@ def pages_view(request):
 @login_required(login_url="/login/")
 def promodem_view(request):
     template = loader.get_template('pages/promodem.html')
-    return HttpResponse(template.render({'promodems': Promodem.objects.all()}, request))
+    return HttpResponse(template.render({'devices': Promodem.objects.all(), 'groups': Group.objects.all()}, request))
 
 
 @login_required(login_url="/login/")

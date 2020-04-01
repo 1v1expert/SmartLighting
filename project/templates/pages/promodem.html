@@ -25,11 +25,11 @@
             </thead>
 
             <tbody>
-            {% for promodem in promodems %}
+            {% for device in devices %}
               <tr>
-                <td><a href="{% url 'promodem_detail' promodem.pk %}">{{promodem.title}}</a></td>
-                <td>{{promodem.brightness}}</td>
-                <td>{{promodem.wifi_signal}}</td>
+                <td><a href="{% url 'promodem_detail' device.pk %}">{{device.title}}</a></td>
+                <td>{{device.brightness}}</td>
+                <td>{{device.wifi_signal}}</td>
               </tr>
             {% endfor %}
             </tbody>
@@ -44,7 +44,7 @@
   <div class="col-md-12">
     <div class="card ">
       <div class="card-header">
-        <h4 class="card-title"> Список устройств</h4>
+        <h4 class="card-title"> Список групп</h4>
       </div>
       <div class="card-body">
         <div class="table-responsive">
