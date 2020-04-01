@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 
 from internal.forms import LoginForm, SignUpForm, PromodemForm
-from core.models import Promodem
+from core.models import Promodem, Group
 from django.template import loader
 
 from django.http import HttpResponse
